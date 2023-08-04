@@ -73,11 +73,25 @@ local function move_cursor()
   api.nvim_win_set_cursor(win, {new_pos, 0})
 end
 
+local function update_view()
+    local pattern = "def%s+(%a+)%s*%(%s*"
+    local current_buf = api.nvim_get_current_buf()
+    local lines = api.nvim_buf_get_lines(current_buf, 0, -1, false)
+
+
+    for _, line in ipairs(lines) do
+        local name = line:match(pattern)
+        if name then
+            table.insert(win, name)
+        end
+    end
+end
 
 -- <cr>: Enter
 local function set_mappings()
     local mappings = {
         q = 'close_window()',
+        u = 'update_view()'
     }
 
     for k,v in pairs(mappings) do
@@ -91,6 +105,7 @@ end
 local function funktree()
     position = 0
     open_window()
+    update_view()
     set_mappings()
     api.nvim_win_set_cursor(win, {2,0})
 end
