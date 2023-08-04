@@ -81,7 +81,7 @@ local function update_view()
     for _, line in ipairs(lines) do
         local name = line:match(pattern)
         if name then
-            vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+            vim.api.nvim_buf_set_lines(buf, 0, -1, false, name)
         end
     end
 end
