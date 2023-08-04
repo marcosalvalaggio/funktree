@@ -85,7 +85,7 @@ local function set_mappings()
     }
 
     for k,v in pairs(mappings) do
-        api.nvim_buf_set_keymap(buf, 'n', k, ':lua require"funk".'..v..'<cr>', {
+        api.nvim_buf_set_keymap(buf, 'n', k, ':lua require"funktree".'..v..'<cr>', {
             nowait = true, noremap = true, silent = true
         })
     end
