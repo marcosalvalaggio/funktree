@@ -69,7 +69,9 @@ end
 
 
 local function move_cursor()
+    local lines = api.nvim_buf_line_count(buf)
     local new_pos = math.max(4, api.nvim_win_get_cursor(win)[1] - 1)
+    new_pos = math.min(new_pos, lines) -- Ensure the new_pos is within the buffer's range
     api.nvim_win_set_cursor(win, {new_pos, 0})
 end
 
