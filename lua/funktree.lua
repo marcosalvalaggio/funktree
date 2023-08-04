@@ -92,7 +92,6 @@ local function funktree()
     position = 0
     open_window()
     set_mappings()
-    api.nvim_win_set_cursor(win, {4, 0})
 end
 
 
