@@ -69,8 +69,12 @@ end
 
 
 local function move_cursor()
-  local new_pos = math.max(4, api.nvim_win_get_cursor(win)[1] - 1)
-  api.nvim_win_set_cursor(win, {new_pos, 0})
+    local new_pos = math.max(4, api.nvim_win_get_cursor(win)[1] - 1)
+    -- Get the line count of the buffer
+    local line_count = api.nvim_buf_line_count(buf)
+    -- Ensure the new position is within the valid range of lines
+    new_pos = math.min(new_pos, line_count)
+    api.nvim_win_set_cursor(win, {new_pos, 0})
 end
 
 
@@ -81,7 +85,7 @@ local function set_mappings()
     }
 
     for k,v in pairs(mappings) do
-        api.nvim_buf_set_keymap(buf, 'n', k, ':lua require"whid".'..v..'<cr>', {
+        api.nvim_buf_set_keymap(buf, 'n', k, ':lua require"funk".'..v..'<cr>', {
             nowait = true, noremap = true, silent = true
         })
     end
