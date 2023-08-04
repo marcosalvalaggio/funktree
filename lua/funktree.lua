@@ -79,7 +79,7 @@ local function update_view()
     local lines = api.nvim_buf_get_lines(current_buf, 0, -1, false)
 
     -- Clear the buffer first
-    vim.api.nvim_buf_set_lines(buf, 0, -1, false, {})
+    -- vim.api.nvim_buf_set_lines(buf, 0, -1, false, {})
 
     for _, line in ipairs(lines) do
         local name = line:match(pattern)
