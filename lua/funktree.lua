@@ -78,11 +78,10 @@ local function update_view()
     local current_buf = api.nvim_get_current_buf()
     local lines = api.nvim_buf_get_lines(current_buf, 0, -1, false)
 
-
     for _, line in ipairs(lines) do
         local name = line:match(pattern)
         if name then
-            table.insert(win, name)
+            vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
         end
     end
 end
@@ -114,6 +113,7 @@ end
 return {
     funktree = funktree,
     move_cursor = move_cursor,
+    update_view = update_view,
     close_window = close_window
 }
 
