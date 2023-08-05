@@ -80,10 +80,9 @@ local function update_view()
 
     for _, line in ipairs(lines) do
         local name = line:match(pattern)
-        vim.api.nvim_buf_set_lines(buf, 0, -1, {"test"})
-        if name then
-            vim.api.nvim_buf_set_lines(buf, 0, -1, false, {name})
-        end
+        table.insert(buf, "test")
+        -- if name then
+        -- end
     end
 end
 
