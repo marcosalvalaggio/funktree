@@ -68,14 +68,15 @@ local function update_view()
     for i, line in ipairs(root_lines) do
         local name = line:match(pattern)
         local res = ""
+        local txt
         if name then
             local extract_pattern = "def%s+(%w+)%("
             res = line:match(extract_pattern)
-            Txt = string.format("lines: %d, %s", i, res)
+            txt = string.format("lines: %d, %s", i, res)
         else
-            Txt = string.format("no match: %d", i)
+            txt = string.format("no match: %d", i)
         end
-        table.insert(reduced_lines, Txt)
+        table.insert(reduced_lines, txt)
     end
     vim.api.nvim_buf_set_lines(buf, 1, -1, false, reduced_lines)
 end
