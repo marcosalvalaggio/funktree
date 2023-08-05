@@ -66,10 +66,8 @@ local function update_view(root_lines, verbose)
     for i, line in ipairs(root_lines) do
         local name = line:match(pattern)
         local res = ""
-        local txt
-        local status = false
+        local txt = ""
         if name then
-            status = true
             local extract_pattern = "def%s+([%w_]+)%s*%([^)]*%)"
             res = line:match(extract_pattern)
             if verbose then
@@ -81,9 +79,6 @@ local function update_view(root_lines, verbose)
             if verbose then
                 txt = string.format("no match: %d", i)
             end
-        end
-        if status == false then
-            txt = ""
         end
         table.insert(reduced_lines, txt)
     end
