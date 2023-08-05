@@ -82,7 +82,7 @@ local function update_view(root_lines, verbose)
                 txt = string.format("no match: %d", i)
             end
         end
-        if status then
+        if status == false then
             txt = ""
         end
         table.insert(reduced_lines, txt)
