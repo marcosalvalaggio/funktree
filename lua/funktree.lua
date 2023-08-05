@@ -63,7 +63,7 @@ end
 
 
 local function update_view()
-    local pattern = "def%s+(%a+)%s*%(%s*"
+    local pattern = "def"
     local reduced_lines = {}
     for i, line in ipairs(root_lines) do
         local name = line:match(pattern)
