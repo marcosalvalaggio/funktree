@@ -63,11 +63,13 @@ end
 local function update_view(root_lines, verbose)
     local pattern = "def"
     local reduced_lines = {}
+    local txt = ""
+    local status = false
     for i, line in ipairs(root_lines) do
         local name = line:match(pattern)
         local res = ""
-        local txt = ""
         if name then
+            status = true
             local extract_pattern = "def%s+([%w_]+)%s*%([^)]*%)"
             res = line:match(extract_pattern)
             if verbose then
@@ -75,11 +77,10 @@ local function update_view(root_lines, verbose)
             else
                 txt = string.format("ƒ: %s, line: %d", res, i)
             end
-        else
-            if verbose then
-                txt = string.format("no match: %d", i)
-            end
+            table.insert(reduced_lines, txt)
         end
+    end
+    if status == false then
         table.insert(reduced_lines, txt)
     end
     vim.api.nvim_buf_set_lines(buf, 1, -1, false, reduced_lines)
