@@ -77,13 +77,17 @@ local function update_view()
     local pattern = "def%s+(%a+)%s*%(%s*"
     local current_buf = api.nvim_get_current_buf()
     local lines = api.nvim_buf_get_lines(current_buf, 0, -1, false)
+    local reduced_lines = {}
 
     for _, line in ipairs(lines) do
         local name = line:match(pattern)
-        table.insert(buf, "test")
+        table.insert(reduced_lines, "test")
         -- if name then
         -- end
     end
+
+    vim.api.nvim_buf_set_lines(buf, 0, -1, false, reduced_lines)
+
 end
 
 -- <cr>: Enter
