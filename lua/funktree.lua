@@ -66,9 +66,10 @@ local function update_view()
     local pattern = "def%s+(%a+)%s*%(%s*"
     local reduced_lines = {}
 
-    for _, line in ipairs(root_lines) do
+    for i, line in ipairs(root_lines) do
         local name = line:match(pattern)
-        table.insert(reduced_lines, "test")
+        local txt = string.format("test: %d", i)
+        table.insert(reduced_lines, txt)
         -- if name then
         -- end
     end
