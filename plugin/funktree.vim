@@ -7,9 +7,6 @@ if exists('g:loaded_funktree') | finish | endif " prevent loading file twice
 let s:save_cpo = &cpo
 set cpo&vim
 
-hi def link WhidHeader      Number
-hi def link WhidSubHeader   Identifier
-
 command! Funk lua require'funktree'.funktree()
 
 let &cpo = s:save_cpo

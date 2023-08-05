@@ -3,6 +3,7 @@
 local api = vim.api
 local buf, win
 local position = 0
+local root_lines = {}
 
 local function center(str)
     local width = api.nvim_win_get_width(0)
@@ -12,15 +13,14 @@ end
 
 
 local function open_window()
+    local root_buf = api.nvim_get_current_buf()
+    root_lines = api.nvim_buf_get_lines(root_buf, 0, -1, false)
     buf = vim.api.nvim_create_buf(false, true)
     local border_buf = vim.api.nvim_create_buf(false, true)
-
     vim.api.nvim_buf_set_option(buf, 'bufhidden', 'wipe')
     vim.api.nvim_buf_set_option(buf, 'filetype', 'funktree')
-
     local width = vim.api.nvim_get_option("columns")
     local height = vim.api.nvim_get_option("lines")
-
     local win_height = math.ceil(height * 0.6 - 4)
     local win_width = math.ceil(width * 0.6)
     local row = math.ceil((height - win_height) / 2 - 1)
@@ -33,7 +33,6 @@ local function open_window()
     row = row - 1,
     col = col - 1
     }
-
     local opts = {
     style = "minimal",
     relative = "editor",
@@ -42,7 +41,6 @@ local function open_window()
     row = row,
     col = col
     }
-
     local border_lines = { '╔' .. string.rep('═', win_width) .. '╗' }
     local middle_line = '║' .. string.rep(' ', win_width) .. '║'
     for i=1, win_height do
@@ -50,15 +48,11 @@ local function open_window()
     end
     table.insert(border_lines, '╚' .. string.rep('═', win_width) .. '╝')
     vim.api.nvim_buf_set_lines(border_buf, 0, -1, false, border_lines)
-
     local border_win = vim.api.nvim_open_win(border_buf, true, border_opts)
     win = api.nvim_open_win(buf, true, opts)
     api.nvim_command('au BufWipeout <buffer> exe "silent bwipeout! "'..border_buf)
-
     vim.api.nvim_win_set_option(win, 'cursorline', true)
-
     api.nvim_buf_set_lines(buf, 0, -1, false, { center('Objects Tree but Funk'), '', ''})
-    api.nvim_buf_add_highlight(buf, -1, 'WhidHeader', 0, 0, -1)
 
 end
 
@@ -68,26 +62,17 @@ local function close_window()
 end
 
 
-local function move_cursor()
-  local new_pos = math.max(4, api.nvim_win_get_cursor(win)[1] - 1)
-  api.nvim_win_set_cursor(win, {new_pos, 0})
-end
-
 local function update_view()
     local pattern = "def%s+(%a+)%s*%(%s*"
-    local current_buf = api.nvim_get_current_buf()
-    local lines = api.nvim_buf_get_lines(current_buf, 0, -1, false)
     local reduced_lines = {}
 
-    for _, line in ipairs(lines) do
+    for _, line in ipairs(root_lines) do
         local name = line:match(pattern)
         table.insert(reduced_lines, "test")
         -- if name then
         -- end
     end
-
     vim.api.nvim_buf_set_lines(buf, 1, -1, false, reduced_lines)
-
 end
 
 -- <cr>: Enter
@@ -116,7 +101,6 @@ end
 
 return {
     funktree = funktree,
-    move_cursor = move_cursor,
     update_view = update_view,
     close_window = close_window
 }
