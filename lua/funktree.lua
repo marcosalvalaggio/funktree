@@ -1,5 +1,3 @@
--- aggiungere update_view(): trova tutte le funzioni e le classi
--- aggiungere go_to_object(): sposta il cursore all'inizio della funzione
 local api = vim.api
 local buf, win
 local position = 0
@@ -62,7 +60,7 @@ local function close_window()
 end
 
 
-local function update_view()
+local function update_view(root_lines)
     local pattern = "def"
     local reduced_lines = {}
     for i, line in ipairs(root_lines) do
@@ -99,7 +97,7 @@ end
 local function funktree()
     position = 0
     open_window()
-    update_view()
+    update_view(root_lines)
     set_mappings()
     api.nvim_win_set_cursor(win, {2,0})
 end
