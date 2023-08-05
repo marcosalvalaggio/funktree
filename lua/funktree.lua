@@ -70,7 +70,7 @@ local function update_view(root_lines)
         if name then
             local extract_pattern = "def%s+(%w+)%("
             res = line:match(extract_pattern)
-            txt = string.format("lines: %d, %s", i, res)
+            txt = string.format("lines: %d, %s, %s", i, res, line)
         else
             txt = string.format("no match: %d", i)
         end
