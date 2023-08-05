@@ -73,7 +73,7 @@ local function update_view(root_lines, verbose)
             if verbose then
                 txt = string.format("lines: %d, %s, %s", i, res, line)
             else
-                txt = string.format("%s, line: %d", res, i)
+                txt = string.format("ƒ: %s, line: %d", res, i)
             end
         else
             if verbose then
