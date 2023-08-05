@@ -79,6 +79,7 @@ local function update_view(root_lines, verbose)
             if verbose then
                 txt = string.format("no match: %d", i)
             end
+            txt = string.format("") 
         end
         table.insert(reduced_lines, txt)
     end
