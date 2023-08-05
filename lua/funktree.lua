@@ -86,7 +86,7 @@ local function update_view()
         -- end
     end
 
-    vim.api.nvim_buf_set_lines(buf, 0, -1, false, reduced_lines)
+    vim.api.nvim_buf_set_lines(buf, 1, -1, false, reduced_lines)
 
 end
 
