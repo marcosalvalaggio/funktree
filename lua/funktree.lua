@@ -60,7 +60,7 @@ local function close_window()
 end
 
 
-local function update_view(root_lines)
+local function update_view(root_lines, verbose)
     local pattern = "def"
     local reduced_lines = {}
     for i, line in ipairs(root_lines) do
@@ -70,9 +70,15 @@ local function update_view(root_lines)
         if name then
             local extract_pattern = "def%s+([%w_]+)%s*%([^)]*%)"
             res = line:match(extract_pattern)
-            txt = string.format("lines: %d, %s, %s", i, res, line)
+            if verbose then
+                txt = string.format("lines: %d, %s, %s", i, res, line)
+            else
+                txt = string.format("%s, line: %d", res, i)
+            end
         else
-            txt = string.format("no match: %d", i)
+            if verbose then
+                txt = string.format("no match: %d", i)
+            end
         end
         table.insert(reduced_lines, txt)
     end
@@ -83,7 +89,6 @@ end
 local function set_mappings()
     local mappings = {
         q = 'close_window()',
-        u = 'update_view()'
     }
 
     for k,v in pairs(mappings) do
@@ -97,7 +102,7 @@ end
 local function funktree()
     position = 0
     open_window()
-    update_view(root_lines)
+    update_view(root_lines, false)
     set_mappings()
     api.nvim_win_set_cursor(win, {2,0})
 end
