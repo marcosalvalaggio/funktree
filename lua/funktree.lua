@@ -68,7 +68,9 @@ local function update_view()
     for i, line in ipairs(root_lines) do
         local name = line:match(pattern)
         if name then
-            Txt = string.format("lines: %d", i)
+            local extract_pattern = "def%s+(%w+)%("
+            local res = line:match(extract_pattern)
+            Txt = string.format("lines: %d, %s", i, res)
         else
             Txt = string.format("no match: %d", i)
         end
