@@ -86,10 +86,18 @@ local function update_view(root_lines, verbose)
     vim.api.nvim_buf_set_lines(buf, 1, -1, false, reduced_lines)
 end
 
+
+local function go_to()
+    local funk_lines = api.nvim_buf_get_lines(buf, 0, -1, false)
+    print("go to test")
+end
+
+
 -- <cr>: Enter
 local function set_mappings()
     local mappings = {
         q = 'close_window()',
+        ['<cr>'] = 'go_to()'
     }
 
     for k,v in pairs(mappings) do
