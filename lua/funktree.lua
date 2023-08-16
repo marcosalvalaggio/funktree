@@ -96,7 +96,7 @@ local function go_to()
     local line_number = tonumber(string.match(line_text, "line: (%d+)"))
     print(line_number)
     vim.api.nvim_win_set_cursor(root_win, {line_number, 0})
-    vim.api.nvim_command("_")
+    vim.api.nvim_input("^")
 end
 
 
