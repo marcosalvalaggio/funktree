@@ -90,9 +90,9 @@ end
 local function go_to()
     local cursor = vim.api.nvim_win_get_cursor(0)
     local cursor_line = cursor[1] - 1  -- Convert to 0-based index
-    -- Get the text of the line where the cursor is placed
     local line_text = vim.api.nvim_buf_get_lines(buf, cursor_line, cursor_line + 1, false)[1]
-    print(line_text)
+    local line_number = tonumber(string.match(line_text, "line: (%d+)"))
+    print(line_number)
 end
 
 
