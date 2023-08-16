@@ -73,7 +73,7 @@ local function update_view(root_lines, verbose)
             local extract_pattern = "def%s+([%w_]+)%s*%([^)]*%)"
             res = line:match(extract_pattern)
             if verbose then
-                txt = string.format("lines: %d, %s, %s", i, res, line)
+                txt = string.format("line: %d, %s, %s", i, res, line)
             else
                 txt = string.format("ƒ: %s, line: %d", res, i)
             end
@@ -88,8 +88,11 @@ end
 
 
 local function go_to()
-    local funk_lines = api.nvim_buf_get_lines(buf, 0, -1, false)
-    print("go to test")
+    local cursor = vim.api.nvim_win_get_cursor(0)
+    local cursor_line = cursor[1] - 1  -- Convert to 0-based index
+    -- Get the text of the line where the cursor is placed
+    local line_text = vim.api.nvim_buf_get_lines(buf, cursor_line, cursor_line + 1, false)[1]
+    print(line_text)
 end
 
 
