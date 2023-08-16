@@ -120,7 +120,8 @@ end
 return {
     funktree = funktree,
     update_view = update_view,
-    close_window = close_window
+    close_window = close_window, 
+    go_to = go_to
 }
 
 
