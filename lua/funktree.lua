@@ -2,6 +2,7 @@ local api = vim.api
 local buf, win
 local position = 0
 local root_lines = {}
+local root_win
 
 local function center(str)
     local width = api.nvim_win_get_width(0)
@@ -11,6 +12,7 @@ end
 
 
 local function open_window()
+    root_win = vim.api.nvim_get_current_win()
     local root_buf = api.nvim_get_current_buf()
     root_lines = api.nvim_buf_get_lines(root_buf, 0, -1, false)
     buf = vim.api.nvim_create_buf(false, true)
@@ -93,6 +95,7 @@ local function go_to()
     local line_text = vim.api.nvim_buf_get_lines(buf, cursor_line, cursor_line + 1, false)[1]
     local line_number = tonumber(string.match(line_text, "line: (%d+)"))
     print(line_number)
+    vim.api.nvim_win_set_cursor(root_win, {line_number, 0})
 end
 
 
