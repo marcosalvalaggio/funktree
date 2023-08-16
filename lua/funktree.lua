@@ -89,13 +89,20 @@ local function update_view(root_lines, verbose)
 end
 
 
+local function get_first_non_whitespace_col(line_text)
+    local first_non_whitespace = string.find(line_text, "%S") or 1
+    return first_non_whitespace
+end
+
+
 local function go_to()
     local cursor = vim.api.nvim_win_get_cursor(0)
     local cursor_line = cursor[1] - 1  -- Convert to 0-based index
     local line_text = vim.api.nvim_buf_get_lines(buf, cursor_line, cursor_line + 1, false)[1]
     local line_number = tonumber(string.match(line_text, "line: (%d+)"))
     print(line_number)
-    vim.api.nvim_win_set_cursor(root_win, {line_number, 0})
+    local col_number = get_first_non_whitespace_col(line_text)
+    vim.api.nvim_win_set_cursor(root_win, {line_number, col_number})
 end
 
 
