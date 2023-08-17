@@ -90,8 +90,8 @@ end
 
 local function update_view(root_lines)
     local class_pattern = "class%s+([%u][%w]*)%s*:"
-    local method_pattern = "%s*def%s+([%w_]+)%s*%([^)]*%)"
-    local func_pattern = "%s+def%s+([%w_]+)%s*%([^)]*%)"
+    local method_pattern = "    def%s+([%w_]+)%s*%([^)]*%)"
+    local func_pattern = "def%s+([%w_]+)%s*%([^)]*%)"
     
     local reduced_lines = {}
     local status = false
