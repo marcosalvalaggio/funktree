@@ -61,50 +61,21 @@ local function close_window()
     api.nvim_win_close(win, true)
 end
 
-
--- local function update_view(root_lines, verbose)
---     local pattern = "def"
---     local reduced_lines = {}
---     local txt = ""
---     local status = false
---     for i, line in ipairs(root_lines) do
---         local name = line:match(pattern)
---         local res = ""
---         if name then
---             status = true
---             local extract_pattern = "def%s+([%w_]+)%s*%([^)]*%)"
---             res = line:match(extract_pattern)
---             if verbose then
---                 txt = string.format("line: %d, %s, %s", i, res, line)
---             else
---                 txt = string.format("ƒ: %s, line: %d", res, i)
---             end
---             table.insert(reduced_lines, txt)
---         end
---     end
---     if status == false then
---         table.insert(reduced_lines, txt)
---     end
---     vim.api.nvim_buf_set_lines(buf, 1, -1, false, reduced_lines)
--- end
-
 local function update_view(root_lines)
     local class_pattern = "class%s+([%u][%w]*)%s*:"
     local method_pattern = "    def%s+([%w_]+)%s*%([^)]*%)"
     local func_pattern = "def%s+([%w_]+)%s*%([^)]*%)"
-    
     local reduced_lines = {}
     local status = false
-    
     for i, line in ipairs(root_lines) do
         local class_name = line:match(class_pattern)
         if class_name then
-            table.insert(reduced_lines, string.format("□: %s, line: %d", class_name, i))
+            table.insert(reduced_lines, string.format("class: %s, line: %d", class_name, i))
             status = true
         else
             local method_name = line:match(method_pattern)
             if method_name then
-                table.insert(reduced_lines, string.format("|-->ƒ: %s, line: %d", method_name, i))
+                table.insert(reduced_lines, string.format("|-->m: %s, line: %d", method_name, i))
                 status = true
             else
                 local function_name = line:match(func_pattern)
@@ -115,11 +86,9 @@ local function update_view(root_lines)
             end
         end
     end
-    
     if not status then
         table.insert(reduced_lines, "No classes, methods, or functions found.")
     end
-    
     vim.api.nvim_buf_set_lines(buf, 1, -1, false, reduced_lines)
 end
 
@@ -133,7 +102,6 @@ local function go_to()
     vim.api.nvim_win_set_cursor(root_win, {line_number, 0})
     close_window()
 end
-
 
 -- <cr>: Enter
 local function set_mappings()
@@ -162,7 +130,7 @@ end
 return {
     funktree = funktree,
     update_view = update_view,
-    close_window = close_window, 
+    close_window = close_window,
     go_to = go_to
 }
 
