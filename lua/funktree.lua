@@ -89,31 +89,37 @@ end
 -- end
 
 local function update_view(root_lines)
-    local func_pattern = "def%s+([%w_]+)%s*%([^)]*%)"
+    local class_pattern = "class%s+([%u][%w]*)%s*:"
     local method_pattern = "%s*def%s+([%w_]+)%s*%([^)]*%)"
-    local class_pattern = "class%s+[%w]+:"
+    local func_pattern = "%s+def%s+([%w_]+)%s*%([^)]*%)"
+    
     local reduced_lines = {}
-    local txt = ""
     local status = false
+    
     for i, line in ipairs(root_lines) do
-        local function_name = line:match(func_pattern)
-        local method_name = line:match(method_pattern)
         local class_name = line:match(class_pattern)
         if class_name then
+            table.insert(reduced_lines, string.format("□: %s, line: %d", class_name, i))
             status = true
-            txt = string.format("□: %s, line: %d", class_name, i)
-        elseif method_name then
-            status = true
-            txt = string.format("|-->ƒ: %s, line: %d", method_name, i)
-        elseif function_name then
-            status = true
-            txt = string.format("ƒ: %s, line: %d", function_name, i)
+        else
+            local method_name = line:match(method_pattern)
+            if method_name then
+                table.insert(reduced_lines, string.format("|-->ƒ: %s, line: %d", method_name, i))
+                status = true
+            else
+                local function_name = line:match(func_pattern)
+                if function_name then
+                    table.insert(reduced_lines, string.format("ƒ: %s, line: %d", function_name, i))
+                    status = true
+                end
+            end
         end
-        table.insert(reduced_lines, txt)
     end
-    if status == false then
-        table.insert(reduced_lines, txt)
+    
+    if not status then
+        table.insert(reduced_lines, "No classes, methods, or functions found.")
     end
+    
     vim.api.nvim_buf_set_lines(buf, 1, -1, false, reduced_lines)
 end
 
