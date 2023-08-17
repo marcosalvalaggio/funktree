@@ -27,6 +27,9 @@ The **:Funk** command opens a new buffer containing the names of the key structu
 
 Moving the cursor to the line in the FunkTree buffer and pressing "Enter" closes the FunkTree buffer and positions the cursor in the original buffer at the lines indicated as "line" in the FunkTree buffer. If you want to close the FunkTree buffer simply press **q** on the keyboard.
 
+A good remap example of the :Funk command can be the following:
 
-
+ ```lua
+vim.api.nvim_set_keymap('n', '<leader>u', ':Funk<CR>', {noremap=true}) s
+ ``` 
 
