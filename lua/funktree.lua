@@ -52,7 +52,7 @@ local function open_window()
     win = api.nvim_open_win(buf, true, opts)
     api.nvim_command('au BufWipeout <buffer> exe "silent bwipeout! "'..border_buf)
     vim.api.nvim_win_set_option(win, 'cursorline', true)
-    api.nvim_buf_set_lines(buf, 0, -1, false, { center('Objects Tree but Funk'), '', ''})
+    api.nvim_buf_set_lines(buf, 0, -1, false, { center('FunkTree'), '', ''})
 
 end
 
@@ -96,6 +96,7 @@ local function go_to()
     local line_number = tonumber(string.match(line_text, "line: (%d+)"))
     print(line_number)
     vim.api.nvim_win_set_cursor(root_win, {line_number, 0})
+    close_window()
 end
 
 
