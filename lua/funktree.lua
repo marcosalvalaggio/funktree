@@ -99,8 +99,10 @@ local function go_to()
     local line_text = vim.api.nvim_buf_get_lines(buf, cursor_line, cursor_line + 1, false)[1]
     local line_number = tonumber(string.match(line_text, "line: (%d+)"))
     print(line_number)
-    vim.api.nvim_win_set_cursor(root_win, {line_number, 0})
-    close_window()
+    if line_number then
+        vim.api.nvim_win_set_cursor(root_win, {line_number, 0})
+        close_window()
+    end
 end
 
 -- <cr>: Enter
