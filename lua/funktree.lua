@@ -62,25 +62,54 @@ local function close_window()
 end
 
 
-local function update_view(root_lines, verbose)
-    local pattern = "def"
+-- local function update_view(root_lines, verbose)
+--     local pattern = "def"
+--     local reduced_lines = {}
+--     local txt = ""
+--     local status = false
+--     for i, line in ipairs(root_lines) do
+--         local name = line:match(pattern)
+--         local res = ""
+--         if name then
+--             status = true
+--             local extract_pattern = "def%s+([%w_]+)%s*%([^)]*%)"
+--             res = line:match(extract_pattern)
+--             if verbose then
+--                 txt = string.format("line: %d, %s, %s", i, res, line)
+--             else
+--                 txt = string.format("ƒ: %s, line: %d", res, i)
+--             end
+--             table.insert(reduced_lines, txt)
+--         end
+--     end
+--     if status == false then
+--         table.insert(reduced_lines, txt)
+--     end
+--     vim.api.nvim_buf_set_lines(buf, 1, -1, false, reduced_lines)
+-- end
+
+local function update_view(root_lines)
+    local func_pattern = "def%s+([%w_]+)%s*%([^)]*%)"
+    local method_pattern = "%s*def%s+([%w_]+)%s*%([^)]*%)"
+    local class_pattern = "class%s+[%w]+:"
     local reduced_lines = {}
     local txt = ""
     local status = false
     for i, line in ipairs(root_lines) do
-        local name = line:match(pattern)
-        local res = ""
-        if name then
+        local function_name = line:match(func_pattern)
+        local method_name = line:match(method_pattern)
+        local class_name = line:match(class_pattern)
+        if class_name then
             status = true
-            local extract_pattern = "def%s+([%w_]+)%s*%([^)]*%)"
-            res = line:match(extract_pattern)
-            if verbose then
-                txt = string.format("line: %d, %s, %s", i, res, line)
-            else
-                txt = string.format("ƒ: %s, line: %d", res, i)
-            end
-            table.insert(reduced_lines, txt)
+            txt = string.format("□: %s, line: %d", class_name, i)
+        elseif method_name then
+            status = true
+            txt = string.format("|-->ƒ: %s, line: %d", method_name, i)
+        elseif function_name then
+            status = true
+            txt = string.format("ƒ: %s, line: %d", function_name, i)
         end
+        table.insert(reduced_lines, txt)
     end
     if status == false then
         table.insert(reduced_lines, txt)
