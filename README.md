@@ -15,7 +15,17 @@ The [packer.nvim](https://github.com/wbthomason/packer.nvim) plugin manager is t
  use("marcosalvalaggio/funktree")
  ``` 
 
- 
+ ## Usage 
+
+ FunkTree is composed by a single command: 
+
+  ```vimscript
+  :Funk
+   ```
+
+The **:Funk** command opens a new buffer containing the names of the key structures present in the analyzed Python file (classes, methods, and functions), as you can see in the demo.gif.
+
+Moving the cursor to the line in the FunkTree buffer and pressing "Enter" closes the FunkTree buffer and positions the cursor in the original buffer at the lines indicated as "line" in the FunkTree buffer. If you want to close the FunkTree buffer simply press **q** on the keyboard.
 
 
 
