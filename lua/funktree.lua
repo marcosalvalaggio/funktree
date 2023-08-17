@@ -121,7 +121,7 @@ end
 local function funktree()
     position = 0
     open_window()
-    update_view(root_lines, false)
+    update_view(root_lines)
     set_mappings()
     api.nvim_win_set_cursor(win, {2,0})
 end
