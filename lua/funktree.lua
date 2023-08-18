@@ -105,8 +105,6 @@ local function update_view(root_lines)
     print(file_extension)
     if file_extension == "py" then
         pylang(root_lines)
-    else
-        print("Not a Python file")
     end
 end
 
