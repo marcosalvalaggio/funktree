@@ -33,3 +33,11 @@ A good remap example of the :Funk command can be the following:
 vim.api.nvim_set_keymap('n', '<leader>u', ':Funk<CR>', {noremap=true}) s
  ``` 
 
+## Todos
+
+Adding support for the following languages:
+
+* c/c++
+* go 
+* rust 
+* lua 
