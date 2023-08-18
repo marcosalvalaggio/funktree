@@ -114,7 +114,7 @@ local function lualang(root_lines)
         end
     end
     if not status then
-        table.insert(reduced_lines, "No classes, methods, or functions found.")
+        table.insert(reduced_lines, "No functions in this file")
     end
     vim.api.nvim_buf_set_lines(buf, 1, -1, false, reduced_lines)
 end
