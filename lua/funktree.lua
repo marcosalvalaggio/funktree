@@ -5,6 +5,7 @@ local root_lines = {}
 local root_win
 local file_extension
 
+
 local function center(str)
     local width = api.nvim_win_get_width(0)
     local shift = math.floor(width / 2) - math.floor(string.len(str) / 2)
@@ -106,7 +107,7 @@ local function lualang(root_lines)
     local reduced_lines = {}
     local status = false
     for i, line in ipairs(root_lines) do
-        local func_name = line:math(func_pattern)
+        local func_name = line:match(func_pattern)
         if func_name then
             table.insert(reduced_lines, string.format("ƒ: %s, line: %d", func_name, i))
             status = true
