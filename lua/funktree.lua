@@ -98,6 +98,7 @@ end
 
 
 local function update_view(root_lines)
+    print(vim.bo.filetype)
     pylang(root_lines)
 end
 
