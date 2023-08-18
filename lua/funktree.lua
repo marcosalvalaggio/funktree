@@ -3,6 +3,7 @@ local buf, win
 local position = 0
 local root_lines = {}
 local root_win
+local file_extension
 
 local function center(str)
     local width = api.nvim_win_get_width(0)
@@ -13,6 +14,9 @@ end
 
 local function open_window()
     -- Operations on original buffer
+    local current_file = vim.fn.expand("%:t")
+    local dot_position = current_file:find("%.[^%.]*$")
+    file_extension = current_file:sub(dot_position + 1)
     root_win = vim.api.nvim_get_current_win()
     local root_buf = api.nvim_get_current_buf()
     root_lines = api.nvim_buf_get_lines(root_buf, 0, -1, false)
@@ -98,7 +102,7 @@ end
 
 
 local function update_view(root_lines)
-    print(vim.bo.filetype)
+    print(file_extension)
     pylang(root_lines)
 end
 
