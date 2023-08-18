@@ -65,7 +65,7 @@ local function close_window()
 end
 
 
-local function update_view(root_lines)
+local function pylang(root_lines)
     local class_pattern = "class%s+([%u][%w]*)%s*:"
     local method_pattern = "    def%s+([%w_]+)%s*%([^)]*%)"
     local func_pattern = "def%s+([%w_]+)%s*%([^)]*%)"
@@ -91,9 +91,14 @@ local function update_view(root_lines)
         end
     end
     if not status then
-        table.insert(reduced_lines, "No classes, methods, or functions found.")
+        table.insert(reduced_lines, "No Funk in this file")
     end
     vim.api.nvim_buf_set_lines(buf, 1, -1, false, reduced_lines)
+end
+
+
+local function update_view(root_lines)
+    pylang(root_lines)
 end
 
 
