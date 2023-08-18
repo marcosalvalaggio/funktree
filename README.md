@@ -30,7 +30,7 @@ Moving the cursor to the line in the FunkTree buffer and pressing "Enter" closes
 A good remap example of the :Funk command can be the following:
 
  ```lua
-vim.api.nvim_set_keymap('n', '<leader>u', ':Funk<CR>', {noremap=true}) s
+vim.api.nvim_set_keymap('n', '<leader>u', ':Funk<CR>', {noremap=true})
  ``` 
 
 ## Todos
