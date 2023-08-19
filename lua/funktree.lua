@@ -123,7 +123,7 @@ end
 local function golang(root_lines)
     local func_pattern = "func%s+([A-Za-z][A-Za-z0-9]*)"
     local method_pattern = "func%s*%([^)]*%)%s+([A-Za-z][A-Za-z0-9]*)%s*%(%s*%)"
-    local struct_pattern = "type%s+([A-Za-z][A-Za-z0-9]*)%s+struct%s*{[^}]*}"
+    local struct_pattern = "type%s+([A-Za-z][A-Za-z0-9]*)%s+struct"
     local reduced_lines = {}
     local status = false
     for i, line in ipairs(root_lines) do
