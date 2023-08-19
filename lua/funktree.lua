@@ -122,13 +122,20 @@ end
 
 local function golang(root_lines)
     local func_pattern = "func%s+([A-Za-z][A-Za-z0-9]*)"
+    local method_pattern = "func%s*%([^)]*%)%s+([A-Za-z][A-Za-z0-9]*)%s*%(%s*%)"
     local reduced_lines = {}
     local status = false
     for i, line in ipairs(root_lines) do
-        local func_name = line:match(func_pattern)
-        if func_name then
-            table.insert(reduced_lines, string.format("ƒ: %s, line: %d", func_name, i))
+        local method_name = line:match(method_pattern)
+        if method_name then
+            table.insert(reduced_lines, string.format("ƒ: %s, line: %d", method_name, i))
             status = true
+        else
+            local function_name = line:match(func_pattern)
+            if function_name then
+                table.insert(reduced_lines, string.format("ƒ: %s, line: %d", function_name, i))
+                status = true
+            end
         end
     end
     if not status then
