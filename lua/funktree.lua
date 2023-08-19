@@ -120,12 +120,32 @@ local function lualang(root_lines)
 end
 
 
+local function golang(root_lines)
+    local func_pattern = "func%s+([%w_]+)%s*%([^)]*%)|([A-Z][a-z0-9]+)+"
+    local reduced_lines = {}
+    local status = false
+    for i, line in ipairs(root_lines) do
+        local func_name = line:match(func_pattern)
+        if func_name then
+            table.insert(reduced_lines, string.format("ƒ: %s, line: %d", func_name, i))
+            status = true
+        end
+    end
+    if not status then
+        table.insert(reduced_lines, "No functions in this file")
+    end
+    vim.api.nvim_buf_set_lines(buf, 1, -1, false, reduced_lines)
+end
+
+
 local function update_view(root_lines)
     print(file_extension)
     if file_extension == "py" then
         pylang(root_lines)
     elseif file_extension == "lua" then
         lualang(root_lines)
+    elseif file_extension == "go" then
+        golang(root_lines)
     end
 end
 
