@@ -128,7 +128,7 @@ local function golang(root_lines)
     for i, line in ipairs(root_lines) do
         local method_name = line:match(method_pattern)
         if method_name then
-            table.insert(reduced_lines, string.format("ƒ: %s, line: %d", method_name, i))
+            table.insert(reduced_lines, string.format("m: %s, line: %d", method_name, i))
             status = true
         else
             local function_name = line:match(func_pattern)
