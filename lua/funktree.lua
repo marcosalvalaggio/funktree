@@ -121,7 +121,7 @@ end
 
 
 local function golang(root_lines)
-    local func_pattern = "func%s+([%w_]+)%s*%([^)]*%)|([A-Z][a-z0-9]+)+"
+    local func_pattern = "func%s+([A-Za-z][A-Za-z0-9]*)"
     local reduced_lines = {}
     local status = false
     for i, line in ipairs(root_lines) do
