@@ -38,5 +38,4 @@ vim.api.nvim_set_keymap('n', '<leader>u', ':Funk<CR>', {noremap=true})
 Adding support for the following languages:
 
 * c/c++
-* go 
 * rust 
