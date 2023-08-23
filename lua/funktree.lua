@@ -153,7 +153,7 @@ end
 
 
 local function clang(root_lines)
-    local func_pattern = "^[^/]*%b{}%s*([%a_][%w_]*)%s*%([^)]*%);"
+    local func_pattern = "^[A-Za-z_][A-Za-z0-9_]*%s*[*]*%s+([A-Za-z][A-Za-z0-9]*)"
     local struct_pattern = "^[^/]*%b{}%s*struct%s+([%a_][%w_]*)%s*%{"
     local reduced_lines = {}
     local status = false
