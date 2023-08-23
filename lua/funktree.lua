@@ -152,6 +152,33 @@ local function golang(root_lines)
 end
 
 
+local function clang(root_lines)
+    local func_pattern = "^[^/]*%b{}%s*([%a_][%w_]*)%s*%([^)]*%);"
+    local struct_pattern = "^[^/]*%b{}%s*struct%s+([%a_][%w_]*)%s*%{"
+    local reduced_lines = {}
+    local status = false
+    for i, line in ipairs(root_lines) do
+        local struct_name = line:match(struct_pattern)
+        if struct_name then
+            table.insert(reduced_lines, string.format("struct: %s, line: %d", struct_name, i))
+            status = true
+        else
+            local function_name = line:match(func_pattern)
+            if function_name then
+                table.insert(reduced_lines, string.format("ƒ: %s, line: %d", function_name, i))
+                status = true
+            end
+        end
+    end
+
+    if not status then
+        table.insert(reduced_lines, "No functions or structs in this file")
+    end
+
+    vim.api.nvim_buf_set_lines(buf, 0, -1, false, reduced_lines)
+end
+
+
 local function update_view(root_lines)
     print(file_extension)
     if file_extension == "py" then
@@ -160,6 +187,8 @@ local function update_view(root_lines)
         lualang(root_lines)
     elseif file_extension == "go" then
         golang(root_lines)
+    elseif file_extension == "c" then
+        clang(root_lines)
     end
 end
 
