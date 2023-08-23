@@ -154,7 +154,7 @@ end
 
 local function clang(root_lines)
     local func_pattern = "^[A-Za-z_][A-Za-z0-9_]*%s*[*]*%s+([A-Za-z][A-Za-z0-9]*)"
-    local struct_pattern = "typedef%s+struct%s*[^{]*{[^}]*}%s*([A-Za-z_][A-Za-z0-9_]*)%s*;"
+    local struct_pattern = "struct%s*[^{]*{[^}]*}%s*([A-Z][a-z]*[A-Z][A-Za-z0-9_]*)"
     local reduced_lines = {}
     local status = false
     for i, line in ipairs(root_lines) do
