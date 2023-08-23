@@ -160,7 +160,6 @@ local function clang(root_lines)
     for i, line in ipairs(root_lines) do
         local struct_name = line:match(struct_pattern)
         if struct_name then
-            print(struct_name)
             table.insert(reduced_lines, string.format("struct: %s, line: %d", struct_name, i))
             status = true
         else
