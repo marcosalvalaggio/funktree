@@ -154,7 +154,7 @@ end
 
 local function clang(root_lines)
     local func_pattern = "^[A-Za-z_][A-Za-z0-9_]*%s*[*]*%s+([A-Za-z][A-Za-z0-9]*)"
-    local struct_pattern = "^[^/]*%b{}%s*struct%s+([%a_][%w_]*)%s*%{"
+    local struct_pattern = "typedef%s+struct%s*[^{]*{[^}]*}%s*([A-Za-z_][A-Za-z0-9_]*)%s*;"
     local reduced_lines = {}
     local status = false
     for i, line in ipairs(root_lines) do
@@ -164,7 +164,7 @@ local function clang(root_lines)
             status = true
         else
             local function_name = line:match(func_pattern)
-            if function_name then
+            if function_name and function_name ~= "struct" then
                 table.insert(reduced_lines, string.format("ƒ: %s, line: %d", function_name, i))
                 status = true
             end
