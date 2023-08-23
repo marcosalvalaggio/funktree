@@ -170,12 +170,10 @@ local function clang(root_lines)
             end
         end
     end
-
     if not status then
         table.insert(reduced_lines, "No functions or structs in this file")
     end
-
-    vim.api.nvim_buf_set_lines(buf, 0, -1, false, reduced_lines)
+    vim.api.nvim_buf_set_lines(buf, 1, -1, false, reduced_lines)
 end
 
 
