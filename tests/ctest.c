@@ -7,6 +7,12 @@ typedef struct {
     bool status;
 } Dog;
 
+
+struct point {
+    int x;
+    int y;
+};
+
 int dogHumanAge(const Dog *dog) {
     return dog->age * 7;
 }
