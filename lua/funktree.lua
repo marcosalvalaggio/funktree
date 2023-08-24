@@ -171,7 +171,6 @@ local function clang(root_lines)
             table.insert(reduced_lines, string.format("struct: %s, line: %d", struct_name, i))
             status = true
         elseif typedef_struct_name then
-            print(typedef_struct_name)
             table.insert(reduced_lines, string.format("struct: %s, line: %d", typedef_struct_name, typedef_struct_position))
             status = true
         else
