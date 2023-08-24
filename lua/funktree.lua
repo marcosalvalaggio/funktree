@@ -153,9 +153,9 @@ end
 
 
 local function clang(root_lines)
-    local func_pattern = "^[A-Za-z_][A-Za-z0-9_]*%s*[*]*%s+([A-Za-z][A-Za-z0-9]*)"
-    local struct_pattern = "struct%s+([A-Za-z][A-Za-z0-9]*)"
-    local typedef_struct_pattern = "}%s*([A-Z][a-z0-9]*)%s*;"
+    local func_pattern = "^[A-Za-z_][A-Za-z0-9_]*%s*[*]*%s+([A-Za-z_][A-Za-z0-9_]*)"
+    local struct_pattern = "struct%s+([A-Za-z_][A-Za-z0-9_]*)"
+    local typedef_struct_pattern = "}%s*([A-Z_][a-z0-9_]*)%s*;"
     local typedef_struct_position_pattern = "typedef struct"
     local typedef_struct_position = nil
     local reduced_lines = {}
