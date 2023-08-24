@@ -156,17 +156,23 @@ local function clang(root_lines)
     local func_pattern = "^[A-Za-z_][A-Za-z0-9_]*%s*[*]*%s+([A-Za-z][A-Za-z0-9]*)"
     local struct_pattern = "struct%s+([A-Za-z][A-Za-z0-9]*)"
     local typedef_struct_pattern = "}%s*([A-Z][a-z0-9]*)%s*;"
+    local typedef_struct_position_pattern = "typedef struct"
+    local typedef_struct_position = nil
     local reduced_lines = {}
     local status = false
     for i, line in ipairs(root_lines) do
         local struct_name = line:match(struct_pattern)
         local typedef_struct_name = line:match(typedef_struct_pattern)
+        local typedef_struct_position_match = line:match(typedef_struct_position_pattern)
+        if typedef_struct_position_match then
+           typedef_struct_position = i
+        end
         if struct_name then
             table.insert(reduced_lines, string.format("struct: %s, line: %d", struct_name, i))
             status = true
         elseif typedef_struct_name then
             print(typedef_struct_name)
-            table.insert(reduced_lines, string.format("struct: %s, line: %d", typedef_struct_name, i))
+            table.insert(reduced_lines, string.format("struct: %s, line: %d", typedef_struct_name, typedef_struct_position))
             status = true
         else
             local function_name = line:match(func_pattern)
