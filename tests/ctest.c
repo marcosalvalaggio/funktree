@@ -8,7 +8,7 @@ typedef struct {
 } Dog;
 
 
-struct point {
+struct point_2D {
     int x;
     int y;
 };
@@ -23,14 +23,14 @@ void dogInit(Dog *dog, const char *name, int age) {
     dog->status = false;
 }
 
-void dogPrint(const Dog *dog) {
+void dog_print(const Dog *dog) {
     printf("name: %s, age: %d\n", dog->name, dog->age);
 }
 
 int main() {
     Dog luna;
     dogInit(&luna, "luna", 9);
-    dogPrint(&luna);
+    dog_print(&luna);
 
     return 0;
 }
