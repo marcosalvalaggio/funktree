@@ -158,7 +158,7 @@ local function clang(root_lines)
     local enum_pattern = "enum%s+([A-Za-z_][A-Za-z0-9_]*)"
     local typedef_name_pattern = "}%s*([A-Z_][a-z0-9_]*)%s*;"
     local typedef_struct_position_pattern = "typedef struct"
-    local typedef_enum_position_pattern = "typdef enum"
+    local typedef_enum_position_pattern = "typedef enum"
     local typedef_struct_position = nil
     local typedef_enum_position = nil
     local reduced_lines = {}
@@ -177,15 +177,15 @@ local function clang(root_lines)
         if struct_name then
             table.insert(reduced_lines, string.format("struct: %s, line: %d", struct_name, i))
             status = true
-        -- elseif typedef_name and typedef_struct_position_match then
-        --     table.insert(reduced_lines, string.format("struct: %s, line: %d", typedef_name, typedef_struct_position))
-        --     status = true
+        elseif typedef_name and typedef_struct_position_match then
+            table.insert(reduced_lines, string.format("struct: %s, line: %d", typedef_name, typedef_struct_position))
+            status = true
         elseif enum_name then
             table.insert(reduced_lines, string.format("enum: %s, line: %d", enum_name, i))
             status = true
-        -- elseif typedef_name and typedef_enum_position_match then
-        --     table.insert(reduced_lines, string.format("enum: %s, line: %d", typedef_name, typedef_enum_position))
-        --     status = true
+        elseif typedef_name and typedef_enum_position_match then
+            table.insert(reduced_lines, string.format("enum: %s, line: %d", typedef_name, typedef_enum_position))
+            status = true
         else
             local function_name = line:match(func_pattern)
             if function_name and function_name ~= "struct" and function_name ~= "enum" then
