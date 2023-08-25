@@ -181,6 +181,7 @@ local function clang(root_lines)
                     table.insert(reduced_lines, string.format("struct: %s, line: %d", typedef_name, typedef_enum_position))
                     status = true
                 end
+            end
         elseif typedef_struct_position_match then
            typedef_struct_position = i
            typedef_enum_position = nil
