@@ -7,11 +7,22 @@ typedef struct {
     bool status;
 } Dog;
 
-
 struct point_2D {
     int x;
     int y;
 };
+
+enum Color {
+    RED,
+    GREEN,
+    BLUE
+}; 
+
+typedef enum {
+    Working,
+    Failed,
+    Freezed
+} State;
 
 int dogHumanAge(const Dog *dog) {
     return dog->age * 7;
