@@ -161,6 +161,7 @@ local function clang(root_lines)
     local typedef_enum_position_pattern = "typedef enum"
     local typedef_struct_position = nil
     local typedef_enum_position = nil
+    local typedef_ongoing = false
     local reduced_lines = {}
     local status = false
     for i, line in ipairs(root_lines) do
@@ -169,22 +170,30 @@ local function clang(root_lines)
         local typedef_name = line:match(typedef_name_pattern)
         local typedef_struct_position_match = line:match(typedef_struct_position_pattern)
         local typedef_enum_position_match = line:match(typedef_enum_position_pattern)
-        if typedef_struct_position_match then
+
+        if typedef_ongoing then
+            if typedef_name then
+                typedef_ongoing = false
+                if typedef_struct_position then
+                    table.insert(reduced_lines, string.format("struct: %s, line: %d", typedef_name, typedef_struct_position))
+                    status = true
+                elseif typedef_enum_position then
+                    table.insert(reduced_lines, string.format("struct: %s, line: %d", typedef_name, typedef_enum_position))
+                    status = true
+                end
+        elseif typedef_struct_position_match then
            typedef_struct_position = i
+           typedef_enum_position = nil
+           typedef_ongoing = true
         elseif typedef_enum_position_match then
             typedef_enum_position = i
-        end
-        if struct_name then
+            typedef_struct_position = nil
+            typedef_ongoing = true
+        elseif struct_name then
             table.insert(reduced_lines, string.format("struct: %s, line: %d", struct_name, i))
-            status = true
-        elseif typedef_name and typedef_struct_position_match then
-            table.insert(reduced_lines, string.format("struct: %s, line: %d", typedef_name, typedef_struct_position))
             status = true
         elseif enum_name then
             table.insert(reduced_lines, string.format("enum: %s, line: %d", enum_name, i))
-            status = true
-        elseif typedef_name and typedef_enum_position_match then
-            table.insert(reduced_lines, string.format("enum: %s, line: %d", typedef_name, typedef_enum_position))
             status = true
         else
             local function_name = line:match(func_pattern)
