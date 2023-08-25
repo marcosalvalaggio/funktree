@@ -219,7 +219,7 @@ local function update_view(root_lines)
         lualang(root_lines)
     elseif file_extension == "go" then
         golang(root_lines)
-    elseif file_extension == "c" then
+    elseif file_extension == "c" or file_extension == "h" then
         clang(root_lines)
     end
 end
