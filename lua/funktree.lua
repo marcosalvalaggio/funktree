@@ -178,7 +178,7 @@ local function clang(root_lines)
                     table.insert(reduced_lines, string.format("struct: %s, line: %d", typedef_name, typedef_struct_position))
                     status = true
                 elseif typedef_enum_position then
-                    table.insert(reduced_lines, string.format("struct: %s, line: %d", typedef_name, typedef_enum_position))
+                    table.insert(reduced_lines, string.format("enum: %s, line: %d", typedef_name, typedef_enum_position))
                     status = true
                 end
             end
