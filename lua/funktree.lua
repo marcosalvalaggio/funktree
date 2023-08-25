@@ -188,7 +188,7 @@ local function clang(root_lines)
         --     status = true
         else
             local function_name = line:match(func_pattern)
-            if function_name and function_name ~= "struct" then
+            if function_name and function_name ~= "struct" and function_name ~= "enum" then
                 table.insert(reduced_lines, string.format("ƒ: %s, line: %d", function_name, i))
                 status = true
             end
