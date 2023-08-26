@@ -5,6 +5,7 @@ local root_lines = {}
 local root_win
 local file_extension
 local golang = require("golang")
+local pylang = require("pylang")
 
 local function center(str)
     local width = api.nvim_win_get_width(0)
@@ -70,36 +71,36 @@ local function close_window()
 end
 
 
-local function pylang(root_lines)
-    local class_pattern = "class%s+([%u][%w]*)%s*:"
-    local method_pattern = "    def%s+([%w_]+)%s*%([^)]*%)"
-    local func_pattern = "def%s+([%w_]+)%s*%([^)]*%)"
-    local reduced_lines = {}
-    local status = false
-    for i, line in ipairs(root_lines) do
-        local class_name = line:match(class_pattern)
-        if class_name then
-            table.insert(reduced_lines, string.format("class: %s, line: %d", class_name, i))
-            status = true
-        else
-            local method_name = line:match(method_pattern)
-            if method_name then
-                table.insert(reduced_lines, string.format("|-->m: %s, line: %d", method_name, i))
-                status = true
-            else
-                local function_name = line:match(func_pattern)
-                if function_name then
-                    table.insert(reduced_lines, string.format("ƒ: %s, line: %d", function_name, i))
-                    status = true
-                end
-            end
-        end
-    end
-    if not status then
-        table.insert(reduced_lines, "No Funk in this file")
-    end
-    vim.api.nvim_buf_set_lines(buf, 1, -1, false, reduced_lines)
-end
+-- local function pylang(root_lines)
+--     local class_pattern = "class%s+([%u][%w]*)%s*:"
+--     local method_pattern = "    def%s+([%w_]+)%s*%([^)]*%)"
+--     local func_pattern = "def%s+([%w_]+)%s*%([^)]*%)"
+--     local reduced_lines = {}
+--     local status = false
+--     for i, line in ipairs(root_lines) do
+--         local class_name = line:match(class_pattern)
+--         if class_name then
+--             table.insert(reduced_lines, string.format("class: %s, line: %d", class_name, i))
+--             status = true
+--         else
+--             local method_name = line:match(method_pattern)
+--             if method_name then
+--                 table.insert(reduced_lines, string.format("|-->m: %s, line: %d", method_name, i))
+--                 status = true
+--             else
+--                 local function_name = line:match(func_pattern)
+--                 if function_name then
+--                     table.insert(reduced_lines, string.format("ƒ: %s, line: %d", function_name, i))
+--                     status = true
+--                 end
+--             end
+--         end
+--     end
+--     if not status then
+--         table.insert(reduced_lines, "No Funk in this file")
+--     end
+--     vim.api.nvim_buf_set_lines(buf, 1, -1, false, reduced_lines)
+-- end
 
 
 local function lualang(root_lines)
@@ -118,38 +119,6 @@ local function lualang(root_lines)
     end
     vim.api.nvim_buf_set_lines(buf, 1, -1, false, reduced_lines)
 end
-
-
--- local function golang(root_lines)
---     local func_pattern = "func%s+([A-Za-z][A-Za-z0-9]*)"
---     local method_pattern = "func%s*%([^)]*%)%s+([A-Za-z][A-Za-z0-9]*)%s*%(%s*%)"
---     local struct_pattern = "type%s+([A-Za-z][A-Za-z0-9]*)%s+struct"
---     local reduced_lines = {}
---     local status = false
---     for i, line in ipairs(root_lines) do
---         local struct_name = line:match(struct_pattern)
---         if struct_name then
---             table.insert(reduced_lines, string.format("struct: %s, line: %d", struct_name, i))
---             status = true
---         else
---             local method_name = line:match(method_pattern)
---             if method_name then
---                 table.insert(reduced_lines, string.format("m: %s, line: %d", method_name, i))
---                 status = true
---             else
---                 local function_name = line:match(func_pattern)
---                 if function_name then
---                     table.insert(reduced_lines, string.format("ƒ: %s, line: %d", function_name, i))
---                     status = true
---                 end
---             end
---         end
---     end
---     if not status then
---         table.insert(reduced_lines, "No functions in this file")
---     end
---     vim.api.nvim_buf_set_lines(buf, 1, -1, false, reduced_lines)
--- end
 
 
 local function clang(root_lines)
@@ -214,7 +183,7 @@ end
 local function update_view(root_lines)
     print(file_extension)
     if file_extension == "py" then
-        pylang(root_lines)
+        pylang(root_lines, buf)
     elseif file_extension == "lua" then
         lualang(root_lines)
     elseif file_extension == "go" then
