@@ -4,7 +4,7 @@ local position = 0
 local root_lines = {}
 local root_win
 local file_extension
-local golang_module = require("golang")
+local golang = require("golang")
 
 local function center(str)
     local width = api.nvim_win_get_width(0)
