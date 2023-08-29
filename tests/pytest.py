@@ -11,6 +11,10 @@ class Dog:
     def __repr__(self):
         return f"name: {self.name}, age: {self.age}"
 
+    def long_method_func(self, param_a, param_b, param_c,
+                         param_d, param_e):
+        return f"{param_a, param_b, param_c, param_d, param_e}"
+
 def main():
     luna = Dog(name="luna", age=9)
     print(luna)
