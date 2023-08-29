@@ -1,8 +1,8 @@
 
 local function pylang(root_lines, buf)
     local class_pattern = "class%s+([%u][%w]*)%s*:"
-    local method_pattern = "    def%s+([%w_]+)%s*%([^)]*%)"
-    local func_pattern = "def%s+([%w_]+)%s*%([^)]*%)"
+    local method_pattern = "    def%s+([%w_]+)%s*%([^)]*"
+    local func_pattern = "def%s+([%w_]+)%s*%([^)]*"
     local reduced_lines = {}
     local status = false
     for i, line in ipairs(root_lines) do
