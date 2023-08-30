@@ -19,9 +19,9 @@ The [packer.nvim](https://github.com/wbthomason/packer.nvim) plugin manager is t
 
  FunkTree is composed by a single command: 
 
-  ```vimscript
-  :Funk
-   ```
+```vimscript
+:Funk
+```
 
 The *:Funk* command opens a new buffer containing the names of the key structures present in the analyzed file. For example, in a Python file, you can find classes, methods, and functions, as demonstrated in the demo.gif.
 
@@ -29,7 +29,7 @@ Moving the cursor to the line in the FunkTree buffer and pressing "Enter" closes
 
 A good remap example of the :Funk command can be the following:
 
- ```lua
+```lua
 vim.api.nvim_set_keymap('n', '<leader>u', ':Funk<CR>', {noremap=true})
- ``` 
+``` 
 
