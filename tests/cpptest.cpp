@@ -12,6 +12,12 @@ class Person {
         void printPerson() {
             std::cout << name << age << std::endl;
         }
+
+        int* test_foo() {
+            int* result = new int(42);
+            return result;
+        }
+            
 };
 
 
@@ -50,6 +56,11 @@ void dogInit(Dog *dog, const char *name, int age) {
 
 void dog_print(const Dog *dog) {
     printf("name: %s, age: %d\n", dog->name, dog->age);
+}
+
+int* test_foo() {
+    int* result = new int(42);
+    return result;
 }
 
 int main() {
