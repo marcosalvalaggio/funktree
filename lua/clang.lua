@@ -51,12 +51,12 @@ local function clang(root_lines, buf)
             status = true
         else
             local method_name = line:match(method_pattern)
-            if method_name and method_name ~= "struct" and method_name ~= "enum" and string.sub(method_name, 1, 3) ~= "new" then
+            if method_name and method_name ~= "struct" and method_name ~= "enum" and string.sub(method_name, 1, 3) ~= "new" and string.sub(method_name, 1, 6) ~= "return" then
                 table.insert(reduced_lines, string.format("-->m: %s, line: %d", method_name, i))
                 status = true
             else
                 local function_name = line:match(func_pattern)
-                if function_name and function_name ~= "struct" and function_name ~= "enum" and string.sub(function_name, 1, 3) ~= "new" then
+                if function_name and function_name ~= "struct" and function_name ~= "enum" and string.sub(function_name, 1, 3) ~= "new" and string.sub(method_name, 1, 6) ~= "return" then
                     table.insert(reduced_lines, string.format("ƒ: %s, line: %d", function_name, i))
                     status = true
                 end
