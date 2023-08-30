@@ -1,7 +1,7 @@
 
 local function clang(root_lines, buf)
     -- local func_pattern = "^[A-Za-z_][A-Za-z0-9_]*%s*[*]*%s+([A-Za-z_][A-Za-z0-9_]*)"
-    local func_pattern = "^(void|int|float|double|char|bool|long|short)[ \t]*\\*?[ \t]+([A-Za-z_][A-Za-z0-9_]*)%s*%("
+    local func_pattern = "^(void|int|float|double|char|bool|long|short)*[ \t]*\\*?[ \t]*\\*?[ \t]*[A-Za-z_][A-Za-z0-9_]*)%s*%("
     -- local method_pattern = "    [A-Za-z_][A-Za-z0-9_]*%s*[*]*%s+([A-Za-z_][A-Za-z0-9_]*)"
     local method_pattern = "    ^(void|int|float|double|char|bool|long|short)[ \t]*\\*?[ \t]+([A-Za-z_][A-Za-z0-9_]*)%s*%("
     local struct_pattern = "struct%s+([A-Za-z_][A-Za-z0-9_]*)"
