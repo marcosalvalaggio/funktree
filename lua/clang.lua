@@ -50,13 +50,11 @@ local function clang(root_lines, buf)
             table.insert(reduced_lines, string.format("class: %s, line: %d", class_name, i))
             status = true
         else
-            print("method case")
             local method_name = line:match(method_pattern)
             if method_name and method_name ~= "struct" and method_name ~= "enum" then
                 table.insert(reduced_lines, string.format("-->m: %s, line: %d", method_name, i))
                 status = true
             else
-                print("func case")
                 local function_name = line:match(func_pattern)
                 if function_name and function_name ~= "struct" and function_name ~= "enum" then
                     table.insert(reduced_lines, string.format("ƒ: %s, line: %d", function_name, i))
