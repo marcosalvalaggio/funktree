@@ -2,7 +2,7 @@
 
 The **FunkTree** plugin simplifies navigation through objects and key structures in files. It's self-contained, avoiding external dependencies or reliance on other plugins. 
 
-Currently, FunkTree works exclusively with **Python, Lua, and Go** files, enabling users to navigate for example among classes, methods, and functions within the open file.
+Currently, FunkTree works exclusively with **Python, Lua, C/C++, and Go** files, enabling users to navigate for example among classes, methods, and functions within the open file.
 
 ![](https://github.com/marcosalvalaggio/funktree/blob/main/demo.gif)
 
@@ -33,9 +33,3 @@ A good remap example of the :Funk command can be the following:
 vim.api.nvim_set_keymap('n', '<leader>u', ':Funk<CR>', {noremap=true})
  ``` 
 
-## Todos
-
-Adding support for the following languages:
-
-* c/c++
-* rust 
