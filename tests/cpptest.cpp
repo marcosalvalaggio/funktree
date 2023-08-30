@@ -17,6 +17,12 @@ class Person {
             int* result = new int(42);
             return result;
         }
+
+        double** newTestFoo() {
+            double** result = new double*;
+            *result = new double(42);
+            return result;
+        }
             
 };
 
@@ -60,6 +66,12 @@ void dog_print(const Dog *dog) {
 
 int* test_foo() {
     int* result = new int(42);
+    return result;
+}
+
+int** new_test_foo() {
+    int** result = new int*;
+    *result = new int(42);
     return result;
 }
 
