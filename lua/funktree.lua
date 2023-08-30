@@ -81,7 +81,7 @@ local function update_view(root_lines)
     elseif file_extension == "go" then
         -- golang(root_lines)
         golang(root_lines, buf)
-    elseif file_extension == "c" or file_extension == "h" then
+    elseif file_extension == "c" or file_extension == "h" or file_extension == "cpp" then
         clang(root_lines, buf)
     end
 end
