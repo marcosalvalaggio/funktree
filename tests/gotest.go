@@ -2,6 +2,12 @@ package main
 
 import "fmt"
 
+
+type geometry interface {
+    area() float64
+    perim() float64
+}
+
 // Struct definition
 type Rectangle struct {
     Width  float64
