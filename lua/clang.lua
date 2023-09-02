@@ -8,6 +8,7 @@ local function clang(root_lines, buf)
     local typedef_name_pattern = "}%s*([A-Z_][a-z0-9_]*)%s*;"
     local typedef_struct_position_pattern = "typedef struct"
     local typedef_enum_position_pattern = "typedef enum"
+    local comment_pattern = "//"
     local typedef_struct_position = nil
     local typedef_enum_position = nil
     local typedef_ongoing = false
@@ -41,9 +42,16 @@ local function clang(root_lines, buf)
             typedef_struct_position = nil
             typedef_ongoing = true
         elseif struct_name then
-            print(line)
-            table.insert(reduced_lines, string.format("struct: %s, line: %d", struct_name, i))
-            status = true
+            local comment_start, struct_start = line:find(comment_pattern), line:find(struct_pattern)
+            if comment_start then
+                if comment_start and struct_start and comment_start > struct_start then
+                    table.insert(reduced_lines, string.format("struct: %s, line: %d", struct_name, i))
+                    status = true
+                end
+            else
+                table.insert(reduced_lines, string.format("struct: %s, line: %d", struct_name, i))
+                status = true
+            end
         elseif enum_name then
             table.insert(reduced_lines, string.format("enum: %s, line: %d", enum_name, i))
             status = true
