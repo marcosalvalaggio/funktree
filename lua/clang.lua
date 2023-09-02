@@ -41,6 +41,7 @@ local function clang(root_lines, buf)
             typedef_struct_position = nil
             typedef_ongoing = true
         elseif struct_name then
+            print(line)
             table.insert(reduced_lines, string.format("struct: %s, line: %d", struct_name, i))
             status = true
         elseif enum_name then
