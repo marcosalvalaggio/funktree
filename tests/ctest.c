@@ -24,7 +24,7 @@ typedef enum {
     Freezed
 } State;
 
-int dogHumanAge(const Dog *dog) {
+int dogHumanAge(const Dog *dog) { // int testDogComment()
     return dog->age * 7;
 }
 
