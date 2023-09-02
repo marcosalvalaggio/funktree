@@ -3,12 +3,17 @@ local function golang(root_lines, buf)
     local func_pattern = "func%s+([A-Za-z][A-Za-z0-9]*)"
     local method_pattern = "func%s*%([^)]*%)%s+([A-Za-z][A-Za-z0-9]*)%s*%(%s*%)"
     local struct_pattern = "type%s+([A-Za-z][A-Za-z0-9]*)%s+struct"
+    local interface_pattern = "type%s+([A-Za-z][A-Za-z0-9]*)%s+interface"
     local reduced_lines = {}
     local status = false
     for i, line in ipairs(root_lines) do
         local struct_name = line:match(struct_pattern)
+        local interface_name = line:match(interface_pattern)
         if struct_name then
             table.insert(reduced_lines, string.format("struct: %s, line: %d", struct_name, i))
+            status = true
+        elseif interface_name then
+            table.insert(reduced_lines, string.format("interface: %s, line: %d", interface_name, i))
             status = true
         else
             local method_name = line:match(method_pattern)
