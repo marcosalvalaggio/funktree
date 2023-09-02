@@ -90,7 +90,6 @@ local function clang(root_lines, buf)
             else
                 local function_name = line:match(func_pattern)
                 if function_name and function_name ~= "struct" and function_name ~= "enum" and string.sub(function_name, 1, 3) ~= "new" then
-                    print(string.sub(function_name, 1, 6))
                     local comment_start, func_start = line:find(comment_pattern), line:find(func_pattern)
                     if comment_start then
                         if comment_start and func_start and comment_start > func_start then
