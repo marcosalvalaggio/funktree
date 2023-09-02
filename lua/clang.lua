@@ -93,8 +93,13 @@ local function clang(root_lines, buf)
                     local comment_start, func_start = line:find(comment_pattern), line:find(func_pattern)
                     if comment_start then
                         if comment_start and func_start and comment_start > func_start then
-                            table.insert(reduced_lines, string.format("ƒ: %s, line: %d", function_name, i))
-                            status = true
+                            if string.sub(function_name, 1, 6) == "define" then
+                                table.insert(reduced_lines, string.format("define: %s, line: %d", function_name, i))
+                                status = true
+                            else
+                                table.insert(reduced_lines, string.format("ƒ: %s, line: %d", function_name, i))
+                                status = true
+                            end
                         end
                     else
                         table.insert(reduced_lines, string.format("ƒ: %s, line: %d", function_name, i))
