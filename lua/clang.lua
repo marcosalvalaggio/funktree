@@ -53,21 +53,53 @@ local function clang(root_lines, buf)
                 status = true
             end
         elseif enum_name then
-            table.insert(reduced_lines, string.format("enum: %s, line: %d", enum_name, i))
-            status = true
+            local comment_start, enum_start = line:find(comment_pattern), line:find(enum_pattern)
+            if comment_start then
+                if comment_start and enum_start and comment_start > enum_start then
+                    table.insert(reduced_lines, string.format("enum: %s, line: %d", enum_name, i))
+                    status = true
+                end
+            else
+                table.insert(reduced_lines, string.format("enum: %s, line: %d", enum_name, i))
+                status = true
+            end
         elseif class_name then
-            table.insert(reduced_lines, string.format("class: %s, line: %d", class_name, i))
-            status = true
+            local comment_start, class_start = line:find(comment_pattern), line:find(class_pattern)
+            if comment_start then
+                if comment_start and class_start and comment_start > class_start then
+                   table.insert(reduced_lines, string.format("class: %s, line: %d", class_name, i))
+                    status = true
+                end
+            else
+                table.insert(reduced_lines, string.format("class: %s, line: %d", class_name, i))
+                status = true
+            end
         else
             local method_name = line:match(method_pattern)
             if method_name and method_name ~= "struct" and method_name ~= "enum" and string.sub(method_name, 1, 3) ~= "new" then
-                table.insert(reduced_lines, string.format("-->m: %s, line: %d", method_name, i))
-                status = true
+                local comment_start, method_start = line:find(comment_pattern), line:find(method_pattern)
+                if comment_start then
+                    if comment_start and method_start and comment_start > method_start then
+                        table.insert(reduced_lines, string.format("-->m: %s, line: %d", method_name, i))
+                        status = true
+                    end
+                else
+                    table.insert(reduced_lines, string.format("-->m: %s, line: %d", method_name, i))
+                    status = true
+                end
             else
                 local function_name = line:match(func_pattern)
                 if function_name and function_name ~= "struct" and function_name ~= "enum" and string.sub(function_name, 1, 3) ~= "new" then
-                    table.insert(reduced_lines, string.format("ƒ: %s, line: %d", function_name, i))
-                    status = true
+                    local comment_start, func_start = line:find(comment_pattern), line:find(func_pattern)
+                    if comment_start then
+                        if comment_start and func_start and comment_start > func_start then
+                            table.insert(reduced_lines, string.format("ƒ: %s, line: %d", function_name, i))
+                            status = true
+                        end
+                    else
+                        table.insert(reduced_lines, string.format("ƒ: %s, line: %d", function_name, i))
+                        status = true
+                    end
                 end
             end
        end
