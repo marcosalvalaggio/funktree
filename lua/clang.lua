@@ -95,7 +95,7 @@ local function clang(root_lines, buf)
                     if comment_start then
                         if comment_start and func_start and comment_start > func_start then
                             if string.sub(function_name, 1, 6) == "define" then
-                                table.insert(reduced_lines, string.format("define: %s, line: %d", function_name, i))
+                                table.insert(reduced_lines, string.format("#def: %s, line: %d", function_name, i))
                                 status = true
                             else
                                 table.insert(reduced_lines, string.format("ƒ: %s, line: %d", function_name, i))
@@ -104,7 +104,7 @@ local function clang(root_lines, buf)
                         end
                     else
                         if string.sub(function_name, 1, 6) == "define" then
-                            table.insert(reduced_lines, string.format("define: %s, line: %d", function_name, i))
+                            table.insert(reduced_lines, string.format("#def: %s, line: %d", function_name, i))
                             status = true
                         else
                             table.insert(reduced_lines, string.format("ƒ: %s, line: %d", function_name, i))
