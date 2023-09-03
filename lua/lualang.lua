@@ -15,6 +15,7 @@ local function lualang(root_lines, buf)
                     status = true
                 end
             else
+                print("LOG")
                 table.insert(reduced_lines, string.format("ƒ: %s, line: %d", func_name, i))
                 status = true
             end
