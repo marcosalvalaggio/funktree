@@ -7,6 +7,7 @@ local function lualang(root_lines, buf)
     for i, line in ipairs(root_lines) do
         local func_name = line:match(func_pattern)
         if func_name then
+            print(func_name)
             local comment_start, func_start = line:find(comment_pattern), line:find(func_pattern)
             if comment_start then
                 if comment_start and func_start and comment_start > func_start then
