@@ -10,11 +10,13 @@ local function lualang(root_lines, buf)
             local comment_start, func_start = line:find(comment_pattern), line:find(func_pattern)
             if comment_start then
                 if comment_start and func_start and comment_start > func_start then
-                    print(i)
+                    table.insert(reduced_lines, string.format("ƒ: %s, line: %d", func_name, i))
+                    status = true
                 end
+            else
+                table.insert(reduced_lines, string.format("ƒ: %s, line: %d", func_name, i))
+                status = true
             end
-            table.insert(reduced_lines, string.format("ƒ: %s, line: %d", func_name, i))
-            status = true
         end
     end
     if not status then
