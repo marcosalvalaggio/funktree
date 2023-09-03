@@ -1,11 +1,11 @@
 
 class Dog:
-    def __init__(self, name, age):
+    def __init__(self, name, age): # class DogTest:
         self.name = name
         self.age = age
         self._status = False
 
-    def human_age(self):
+    def human_age(self): # def human_age_test()
         return self.age * 7
 
     def __repr__(self):
