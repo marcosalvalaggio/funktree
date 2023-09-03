@@ -4,7 +4,7 @@ import "fmt"
 
 
 type geometry interface {
-    area() float64
+    area() float64 // type area struct {
     perim() float64
 }
 

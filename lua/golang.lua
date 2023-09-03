@@ -22,18 +22,42 @@ local function golang(root_lines, buf)
                 status = true
             end
         elseif interface_name then
-            table.insert(reduced_lines, string.format("interface: %s, line: %d", interface_name, i))
-            status = true
+            local comment_start, interface_start = line:find(comment_pattern), line:find(interface_pattern)
+            if comment_start then
+                if comment_start and interface_start and comment_start > interface_start then
+                    table.insert(reduced_lines, string.format("interface: %s, line: %d", interface_name, i))
+                    status = true
+                end
+            else
+                table.insert(reduced_lines, string.format("interface: %s, line: %d", interface_name, i))
+                status = true
+            end
         else
             local method_name = line:match(method_pattern)
             if method_name then
-                table.insert(reduced_lines, string.format("m: %s, line: %d", method_name, i))
-                status = true
+                local comment_start, method_start = line:find(comment_pattern), line:find(method_pattern)
+                if comment_start then
+                    if comment_start and method_start and comment_start > method_start then
+                        table.insert(reduced_lines, string.format("m: %s, line: %d", method_name, i))
+                        status = true
+                    end
+                else
+                    table.insert(reduced_lines, string.format("m: %s, line: %d", method_name, i))
+                    status = true
+                end
             else
                 local function_name = line:match(func_pattern)
                 if function_name then
-                    table.insert(reduced_lines, string.format("ƒ: %s, line: %d", function_name, i))
-                    status = true
+                    local comment_start, func_start = line:find(comment_pattern), line:find(func_pattern)
+                    if comment_start then
+                        if comment_start and func_start and comment_start > func_start then
+                            table.insert(reduced_lines, string.format("ƒ: %s, line: %d", function_name, i))
+                            status = true
+                        end
+                    else
+                        table.insert(reduced_lines, string.format("ƒ: %s, line: %d", function_name, i))
+                        status = true
+                    end
                 end
             end
         end
