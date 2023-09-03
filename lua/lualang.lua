@@ -9,8 +9,9 @@ local function lualang(root_lines, buf)
         if func_name then
             local comment_start, func_start = line:find(comment_pattern), line:find(func_pattern)
             if comment_start then
-                print("log")
-                print(i)
+                if comment_start and func_start and comment_start > func_start then
+                    print(i)
+                end
             end
             table.insert(reduced_lines, string.format("ƒ: %s, line: %d", func_name, i))
             status = true
