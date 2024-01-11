@@ -1,6 +1,7 @@
 
 local function pylang(root_lines, buf)
-    local class_pattern = "class%s+([%u][%w]*)%s*:"
+    -- local class_pattern = "class%s+([%u][%w]*)%s*:"
+    local class_pattern = "class%s*%(%s*([%a_][%w_]*)%s*%)%s*:"
     local method_pattern = "    def%s+([%w_]+)%s*%([^)]*"
     local func_pattern = "def%s+([%w_]+)%s*%([^)]*"
     local comment_pattern = "#"
