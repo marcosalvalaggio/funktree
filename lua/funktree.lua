@@ -3,10 +3,11 @@ local buf, win
 local root_lines = {}
 local root_win
 local file_extension
-local golang = require("golang")
+-- local golang = require("golang")
 local pylang = require("pylang")
 local lualang = require("lualang")
-local clang = require("clang")
+local jslang = require("jslang")
+-- local clang = require("clang")
 
 local function center(str)
     local width = api.nvim_win_get_width(0)
@@ -78,6 +79,8 @@ local function update_view(root_lines)
         pylang(root_lines, buf)
     elseif file_extension == "lua" then
         lualang(root_lines, buf)
+    elseif file_extension == "js" then
+        jslang(root_lines, buf)
     -- elseif file_extension == "go" then
         -- golang(root_lines)
         -- golang(root_lines, buf)
