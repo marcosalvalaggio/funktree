@@ -7,6 +7,7 @@ local file_extension
 local pylang = require("pylang")
 local lualang = require("lualang")
 local jslang = require("jslang")
+local golang = require("golang")
 -- local clang = require("clang")
 
 local function center(str)
@@ -81,9 +82,8 @@ local function update_view(root_lines)
         lualang(root_lines, buf)
     elseif file_extension == "js" then
         jslang(root_lines, buf)
-    -- elseif file_extension == "go" then
-        -- golang(root_lines)
-        -- golang(root_lines, buf)
+    elseif file_extension == "go" then
+        golang(root_lines, buf)
     -- elseif file_extension == "c" or file_extension == "h" or file_extension == "cpp" then
         -- clang(root_lines, buf)
     end
