@@ -1,5 +1,9 @@
 # FunkTree
 
+<h1 align="center">
+<img src="logo.png" width="150">
+</h1><br>
+
 The **FunkTree** plugin simplifies navigation through objects and key structures in files. It's self-contained, avoiding external dependencies or reliance on other plugins. 
 
 Currently, *FunkTree* works with: 
