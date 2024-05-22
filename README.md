@@ -2,7 +2,17 @@
 
 The **FunkTree** plugin simplifies navigation through objects and key structures in files. It's self-contained, avoiding external dependencies or reliance on other plugins. 
 
-Currently, FunkTree works exclusively with **Python, Lua, JavaScript** files, enabling users to navigate for example among classes, methods, and functions within the open file.
+Currently, *FunkTree* works with: 
+
+| Language   | Level        |
+|------------|--------------|
+| Lua        | Basic        |
+| Python     | Advanced     |
+| JavaScript | Basic        |
+| Go         | Intermidiate |
+
+
+*FunkTree* enable users to navigate for example among classes, methods, and functions within the open file.
 
 ![](https://github.com/marcosalvalaggio/funktree/blob/main/demo.gif)
 
