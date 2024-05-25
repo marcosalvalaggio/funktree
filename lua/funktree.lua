@@ -40,14 +40,14 @@ local function open_window()
     local col = math.ceil((width - win_width) / 2)
     
     -- Graph buffer operations
-    -- local border_opts = {
-    --     style = "minimal",
-    --     relative = "editor",
-    --     width = win_width + 2,
-    --     height = win_height + 2,
-    --     row = row - 1,
-    --     col = col - 1
-    -- }
+    local border_opts = {
+        style = "minimal",
+        relative = "editor",
+        width = win_width + 2,
+        height = win_height + 2,
+        row = row - 1,
+        col = col - 1
+    }
 
     local opts = {
         style = "minimal",
@@ -65,7 +65,7 @@ local function open_window()
     end
     table.insert(border_lines, '╚' .. string.rep('═', win_width) .. '╝')
     vim.api.nvim_buf_set_lines(border_buf, 0, -1, false, border_lines)
-    -- local border_wn = vim.api.nvim_open_win(border_buf, true, border_opts)
+    local _ = vim.api.nvim_open_win(border_buf, true, border_opts)
     win = api.nvim_open_win(buf, true, opts)
     api.nvim_command('au BufWipeout <buffer> exe "silent bwipeout! "'..border_buf)
     vim.api.nvim_win_set_option(win, 'cursorline', true)
