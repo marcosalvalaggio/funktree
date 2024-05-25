@@ -3,10 +3,10 @@ local buf, win
 local root_lines = {}
 local root_win
 local file_extension
-local pylang = require("lang.pylang")
-local lualang = require("lang.lualang")
-local jslang = require("lang.jslang")
-local golang = require("lang.golang")
+local pylang = require("pylang")
+local lualang = require("lualang")
+local jslang = require("jslang")
+local golang = require("golang")
 -- local clang = require("lang.clang")
 
 
