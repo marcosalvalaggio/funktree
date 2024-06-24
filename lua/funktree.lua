@@ -1,5 +1,5 @@
 local api = vim.api
-local buf, win
+local buf, win, search_buf, search_win
 local root_lines = {}
 local root_win
 local file_extension
@@ -71,11 +71,16 @@ local function open_window()
 end
 
 local function close_window()
-	api.nvim_win_close(win, true)
+	if win and api.nvim_win_is_valid(win) then
+		api.nvim_win_close(win, true)
+	end
+	if search_win and api.nvim_win_is_valid(search_win) then
+		api.nvim_win_close(search_win, true)
+	end
 end
 
 local function update_view(lines)
-	print(file_extension)
+	vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
 	if file_extension == "py" then
 		pylang(lines, buf)
 	elseif file_extension == "lua" then
@@ -94,7 +99,6 @@ local function go_to()
 	local cursor_line = cursor[1] - 1 -- Convert to 0-based index
 	local line_text = vim.api.nvim_buf_get_lines(buf, cursor_line, cursor_line + 1, false)[1]
 	local line_number = tonumber(string.match(line_text, "line: (%d+)"))
-	print(line_number)
 	if line_number then
 		vim.api.nvim_win_set_cursor(root_win, { line_number, 0 })
 		close_window()
@@ -105,6 +109,7 @@ local function set_mappings()
 	local mappings = {
 		q = "close_window()",
 		["<cr>"] = "go_to()",
+		["/"] = "search()",
 	}
 
 	for k, v in pairs(mappings) do
@@ -116,20 +121,51 @@ local function set_mappings()
 	end
 end
 
+local function create_search_window()
+	local width = vim.api.nvim_get_option("columns")
+	local win_width = math.ceil(width * 0.6)
+	local row = math.ceil(
+		(vim.api.nvim_get_option("lines") - math.ceil(vim.api.nvim_get_option("lines") * 0.6 - 4)) / 2 - 1
+	) - 2
+	local col = math.ceil((width - win_width) / 2) + 1
+
+	search_buf = vim.api.nvim_create_buf(false, true)
+	vim.api.nvim_buf_set_option(search_buf, "bufhidden", "wipe")
+	vim.api.nvim_buf_set_option(search_buf, "buftype", "prompt")
+
+	local opts = {
+		style = "minimal",
+		relative = "editor",
+		width = win_width,
+		height = 1,
+		row = row,
+		col = col,
+	}
+
+	search_win = vim.api.nvim_open_win(search_buf, true, opts)
+	vim.fn.prompt_setprompt(search_buf, "Search: ")
+	vim.api.nvim_feedkeys("i", "n", false)
+end
+
 local function search()
-  local search_term = vim.fn.input("Search: ")
-  if search_term == "" then
-    update_view(root_lines)
-  else
-    local filtered_lines = {}
-    for _, line in ipairs(root_lines) do
-      if string.match(line, search_term) then
-        table.insert(filtered_lines, line)
-      end
-    end
-    update_view(filtered_lines)
-  end
-  
+	if not search_win or not vim.api.nvim_win_is_valid(search_win) then
+		create_search_window()
+	end
+	vim.api.nvim_set_current_win(search_win)
+
+	vim.api.nvim_create_autocmd("TextChangedI", {
+		buffer = search_buf,
+		callback = function()
+			local search_term = vim.api.nvim_buf_get_lines(search_buf, 0, -1, false)[1]:sub(8)
+			local filtered_lines = {}
+			for _, line in ipairs(root_lines) do
+				if string.match(line, search_term) then
+					table.insert(filtered_lines, line)
+				end
+			end
+			update_view(filtered_lines)
+		end,
+	})
 end
 
 local function funktree()
@@ -144,5 +180,5 @@ return {
 	update_view = update_view,
 	close_window = close_window,
 	go_to = go_to,
-  searh = search
+	search = search,
 }
