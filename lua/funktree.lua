@@ -68,21 +68,6 @@ local function open_window()
 	api.nvim_command('au BufWipeout <buffer> exe "silent bwipeout! "' .. border_buf)
 	vim.api.nvim_win_set_option(win, "cursorline", true)
 	api.nvim_buf_set_lines(buf, 0, -1, false, { center("FunkTree"), "", "" })
-
-	-- Create the input bar buffer
-	search_buf = vim.api.nvim_create_buf(false, true)
-	local search_opts = {
-		style = "minimal",
-		relative = "editor",
-		width = win_width,
-		height = 1,
-		row = row + win_height + 1,
-		col = col,
-	}
-	search_win = api.nvim_open_win(search_buf, true, search_opts)
-	vim.api.nvim_buf_set_option(search_buf, "bufhidden", "wipe")
-	vim.api.nvim_buf_set_option(search_buf, "buftype", "prompt")
-	vim.fn.prompt_setprompt(search_buf, "> ")
 end
 
 local function close_window()
@@ -120,10 +105,6 @@ local function go_to()
 	end
 end
 
-local function search()
-	vim.cmd("startinsert")
-end
-
 local function set_mappings()
 	local mappings = {
 		q = "close_window()",
@@ -140,6 +121,7 @@ local function set_mappings()
 	end
 end
 
+
 local function funktree()
 	open_window()
 	update_view(root_lines)
@@ -152,6 +134,5 @@ return {
 	update_view = update_view,
 	close_window = close_window,
 	go_to = go_to,
-	search = search,
+	-- search = search,
 }
-
