@@ -68,6 +68,21 @@ local function open_window()
 	api.nvim_command('au BufWipeout <buffer> exe "silent bwipeout! "' .. border_buf)
 	vim.api.nvim_win_set_option(win, "cursorline", true)
 	api.nvim_buf_set_lines(buf, 0, -1, false, { center("FunkTree"), "", "" })
+
+	-- Create the input bar buffer
+	search_buf = vim.api.nvim_create_buf(false, true)
+	local search_opts = {
+		style = "minimal",
+		relative = "editor",
+		width = win_width,
+		height = 1,
+		row = row + win_height + 1,
+		col = col,
+	}
+	search_win = api.nvim_open_win(search_buf, true, search_opts)
+	vim.api.nvim_buf_set_option(search_buf, "bufhidden", "wipe")
+	vim.api.nvim_buf_set_option(search_buf, "buftype", "prompt")
+	vim.fn.prompt_setprompt(search_buf, "> ")
 end
 
 local function close_window()
@@ -105,6 +120,10 @@ local function go_to()
 	end
 end
 
+local function search()
+	vim.cmd("startinsert")
+end
+
 local function set_mappings()
 	local mappings = {
 		q = "close_window()",
@@ -121,53 +140,6 @@ local function set_mappings()
 	end
 end
 
-local function create_search_window()
-	local width = vim.api.nvim_get_option("columns")
-	local win_width = math.ceil(width * 0.6)
-	local row = math.ceil(
-		(vim.api.nvim_get_option("lines") - math.ceil(vim.api.nvim_get_option("lines") * 0.6 - 4)) / 2 - 1
-	) - 2
-	local col = math.ceil((width - win_width) / 2) + 1
-
-	search_buf = vim.api.nvim_create_buf(false, true)
-	vim.api.nvim_buf_set_option(search_buf, "bufhidden", "wipe")
-	vim.api.nvim_buf_set_option(search_buf, "buftype", "prompt")
-
-	local opts = {
-		style = "minimal",
-		relative = "editor",
-		width = win_width,
-		height = 1,
-		row = row,
-		col = col,
-	}
-
-	search_win = vim.api.nvim_open_win(search_buf, true, opts)
-	vim.fn.prompt_setprompt(search_buf, "Search: ")
-	vim.api.nvim_feedkeys("i", "n", false)
-end
-
-local function search()
-	if not search_win or not vim.api.nvim_win_is_valid(search_win) then
-		create_search_window()
-	end
-	vim.api.nvim_set_current_win(search_win)
-
-	vim.api.nvim_create_autocmd("TextChangedI", {
-		buffer = search_buf,
-		callback = function()
-			local search_term = vim.api.nvim_buf_get_lines(search_buf, 0, -1, false)[1]:sub(8)
-			local filtered_lines = {}
-			for _, line in ipairs(root_lines) do
-				if string.match(line, search_term) then
-					table.insert(filtered_lines, line)
-				end
-			end
-			update_view(filtered_lines)
-		end,
-	})
-end
-
 local function funktree()
 	open_window()
 	update_view(root_lines)
@@ -182,3 +154,4 @@ return {
 	go_to = go_to,
 	search = search,
 }
+
