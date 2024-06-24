@@ -116,6 +116,22 @@ local function set_mappings()
 	end
 end
 
+local function search()
+  local search_term = vim.fn.input("Search: ")
+  if search_term == "" then
+    update_view(root_lines)
+  else
+    local filtered_lines = {}
+    for _, line in ipairs(root_lines) do
+      if string.match(line, search_term) then
+        table.insert(filtered_lines, line)
+      end
+    end
+    update_view(filtered_lines)
+  end
+  
+end
+
 local function funktree()
 	open_window()
 	update_view(root_lines)
@@ -128,4 +144,5 @@ return {
 	update_view = update_view,
 	close_window = close_window,
 	go_to = go_to,
+  searh = search
 }
