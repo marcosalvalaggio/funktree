@@ -6,6 +6,7 @@ local actions = require "telescope.actions"
 local action_state = require "telescope.actions.state"
 local lualang = require("lualang")
 local jslang = require("jslang")
+local pylang = require("pylang")
 
 local api = vim.api
 local root_win
@@ -34,6 +35,9 @@ local function extract_function_names(lines, file_extension)
     return rows
   elseif file_extension == "js" then
     local rows = jslang(lines)
+    return rows
+  elseif file_extension == "py" then
+    local rows = pylang(lines)
     return rows
   else
     vim.api.nvim_err_writeln("Unsupported file extension: " .. file_extension)

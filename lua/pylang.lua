@@ -1,4 +1,4 @@
-local function pylang(root_lines, buf)
+local function pylang(root_lines)
 	-- local class_pattern = "class%s+([%u][%w]*)%s*:"
 	local class_pattern = "%bclass%s+(%w+)"
 	local method_pattern = "    def%s+([%w_]+)%s*%([^)]*"
@@ -50,9 +50,11 @@ local function pylang(root_lines, buf)
 		end
 	end
 	if not status then
-		table.insert(reduced_lines, "No Funk in this file")
+		-- table.insert(reduced_lines, "No Funk in this file")
+    return {}
 	end
-	vim.api.nvim_buf_set_lines(buf, 1, -1, false, reduced_lines)
+	-- vim.api.nvim_buf_set_lines(buf, 1, -1, false, reduced_lines)
+  return reduced_lines
 end
 
 return pylang
