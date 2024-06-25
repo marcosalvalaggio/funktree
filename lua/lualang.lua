@@ -1,4 +1,4 @@
-local function lualang(root_lines, buf)
+local function lualang(root_lines)
 	local func_pattern = "function%s+([%w_]+)%s*%([^)]*%)"
 	local reduced_lines = {}
 	local status = false
@@ -10,9 +10,9 @@ local function lualang(root_lines, buf)
 		end
 	end
 	if not status then
-		table.insert(reduced_lines, "No functions in this file")
+		return {}
 	end
-	vim.api.nvim_buf_set_lines(buf, 1, -1, false, reduced_lines)
+	  return reduced_lines
 end
 
 return lualang
