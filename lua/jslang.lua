@@ -1,4 +1,4 @@
-local function jslang(root_lines, buf)
+local function jslang(root_lines)
 	local func_pattern = "function%s+([%w_]+)%s*%([^)]*"
 	local comment_pattern = "//"
 	local reduced_lines = {}
@@ -19,9 +19,9 @@ local function jslang(root_lines, buf)
 		end
 	end
 	if not status then
-		table.insert(reduced_lines, "No funk in this file")
+    return {}
 	end
-	vim.api.nvim_buf_set_lines(buf, 1, -1, false, reduced_lines)
+  return reduced_lines
 end
 
 return jslang
