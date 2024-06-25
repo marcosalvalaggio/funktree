@@ -4,7 +4,9 @@
 <img src="logo.png" width="180">
 </h1><br>
 
-The **FunkTree** plugin simplifies navigation through objects and key structures in files. It's self-contained, avoiding external dependencies or reliance on other plugins. 
+The **FunkTree** plugin simplifies navigation through objects and key structures in files.
+It's based on the awesome [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim/tree/master) plugin
+that works as a frontend for the parsing result of the analyzed file.
 
 Currently, *FunkTree* works with: 
 
@@ -13,12 +15,11 @@ Currently, *FunkTree* works with:
 | Lua        | Basic        |
 | Python     | Advanced     |
 | JavaScript | Basic        |
-| Go         | Intermidiate |
 
 
 *FunkTree* enable users to navigate for example among classes, methods, and functions within the open file.
 
-![](https://github.com/marcosalvalaggio/funktree/blob/main/demo.gif)
+<!-- ![](https://github.com/marcosalvalaggio/funktree/blob/main/demo.gif) -->
 
 
 ## Installation 
